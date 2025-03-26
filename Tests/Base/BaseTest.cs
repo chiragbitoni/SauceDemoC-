@@ -13,11 +13,13 @@ namespace SauceDemoC_.Tests.Base
     {
         protected IWebDriver Driver;
         protected string url = "https://www.saucedemo.com/";
+        public TestContext TestContext { get; set; }
 
         [TestInitialize]
         public void Setup()
         {
-            Driver = new ChromeDriver();
+            string browser = TestContext.Properties["Browser"]?.ToString() ?? "chrome";
+            Driver = WebDriverFactory.CreateDriver(browser);
             Driver.Manage().Window.Maximize();
             Driver.Navigate().GoToUrl(url);
         }
